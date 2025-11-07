@@ -1,23 +1,27 @@
 const express = require('express');
 const cors = require('cors');
+
+// Importar rutas
 const usuariosRoutes = require('./routes/usuarios');
-const authRoutes = require('./routes/auth');
+const authRoutes = require('./routes/auth'); // <-- aquí estaba el problema
 
 const app = express();
 const PORT = 5001;
 
+// Middlewares
+app.use(cors());
+app.use(express.json());
 
-    app.use('/api/auth', authRoutes);
-    app.use(cors());
+// Rutas
+app.use('/api/auth', authRoutes);
+app.use('/api/usuarios', usuariosRoutes);
 
-    app.use(express.json());
-    app.use('/api/usuarios', usuariosRoutes);
+// Ruta de prueba
+app.get('/', (req, res) => {
+  res.json({ message: 'API de Usuarios funcionando correctamente' });
+});
 
-    app.get('/', (req, res) => {
-    res.json({ message: 'API de Usuarios funcionando correctamente' });
-    });
-    
-    app.listen(PORT, () => {
-    console.log(`🚀 Servidor corriendo en
-    http://localhost:${PORT}`);
-    });
+// Iniciar servidor
+app.listen(PORT, () => {
+  console.log(`🚀 Servidor corriendo en http://localhost:${PORT}`);
+});

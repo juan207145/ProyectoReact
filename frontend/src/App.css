@@ -1,0 +1,23 @@
+:root {
+  --color-principal: #1e40af; /* azul corporativo */
+  --color-secundario: #facc15; /* amarillo */
+}
+
+body {
+  background-color: #f3f4f6; /* gris claro */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.text-primary {
+  color: var(--color-principal) !important;
+}
+
+.btn-primary {
+  background-color: var(--color-principal);
+  border-color: var(--color-principal);
+}
+
+.btn-success {
+  background-color: var(--color-secundario);
+  border-color: var(--color-secundario);
+}

@@ -5,62 +5,55 @@ import { useNavigate } from 'react-router-dom';
 function LoginForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError("");
+    e.preventDefault(); 
 
     try {
-      const res = await axios.post('http://localhost:5001/api/auth/login', { email, password });
+      const res = await axios.post("http://localhost:5001/api/auth/login", {
+        email,
+        password
+      });
 
-      if (res.data.user) {
+      if (res.data && res.data.user) {
         localStorage.setItem("user", JSON.stringify(res.data.user));
-        navigate("/usuarios");
+        navigate('/usuarios');
       } else {
-        setError("Correo o contraseña incorrectos");
-        setEmail("");     
-        setPassword("");  
+        navigate('/error');
       }
 
-    } catch (err) {
-      setError("Correo o contraseña incorrectos");
-      setEmail("");     
-      setPassword("");
+    } catch (error) {
+    
+      navigate('/error');
     }
   };
 
   return (
     <div className="container mt-5 text-center">
-      <form 
-        onSubmit={handleSubmit}
-        className="mx-auto p-4 border rounded"
-        style={{ maxWidth: "320px" }}
-      >
-        <h3 className="mb-3">Login</h3>
+      <h2>Iniciar Sesión</h2>
+      <form onSubmit={handleSubmit} className="mx-auto" style={{ maxWidth: '300px' }}>
+        <div className="mb-3">
+          <input
+            type="email"
+            className="form-control"
+            placeholder="Correo"
+            value={email}
+            onChange={e => setEmail(e.target.value)}
+            required
+          />
+        </div>
 
-        <input
-          type="email"
-          className="form-control mb-3"
-          placeholder="Correo"
-          value={email}
-          onChange={e => setEmail(e.target.value)}
-          required
-        />
-
-        <input
-          type="password"
-          className="form-control mb-3"
-          placeholder="Contraseña"
-          value={password}
-          onChange={e => setPassword(e.target.value)}
-          required
-        />
-
-        {error && (
-          <p className="text-danger mb-2">{error}</p>
-        )}
+        <div className="mb-3">
+          <input
+            type="password"
+            className="form-control"
+            placeholder="Contraseña"
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+            required
+          />
+        </div>
 
         <button type="submit" className="btn btn-primary w-100">
           Iniciar sesión

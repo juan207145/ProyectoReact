@@ -21,10 +21,15 @@ function UsuariosPage() {
       .catch(() => navigate('/error'));
   };
 
-  
-  const handleEdit = (user) => {
-    navigate(`/editar/${user.id}`);
-  };
+    const handleEdit = (user) => {
+      navigate(`/editar/${user.id}`, {
+        state: {
+          nombre: user.nombre,
+          email: user.email,
+          telefono: user.telefono
+        }
+      });
+    };
 
   
   const handleLogout = () => {
